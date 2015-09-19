@@ -11,13 +11,24 @@
 #import "ItemObject.h"
 #import "FBLikeLayout.h"
 #import "UserHeaderReusableView.h"
+#import "CommentTableViewCell.h"
+#import "NSDate+TimeAgo.h"
+#import "CommentObject.h"
 
-@interface UserViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface UserViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UITableView *commentsView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *ivProfilePic;
+@property (weak, nonatomic) IBOutlet UILabel *lblLocation;
+@property (weak, nonatomic) IBOutlet UILabel *lblName;
+@property (weak, nonatomic) IBOutlet UITextView *tvBio;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentBar;
 
 
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *comments;
 
 @end
 
@@ -46,7 +57,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
     
     if (!self.items) {
@@ -100,6 +111,46 @@
     NSLog(@"items: %@", self.items);
         
     [self.collectionView reloadData];
+    
+    // TABLE
+    
+    self.commentsView.estimatedRowHeight = 44.0 ;
+    self.commentsView.rowHeight = UITableViewAutomaticDimension;
+    
+    if (!self.comments) {
+        self.comments = [NSMutableArray array];
+    }
+    
+    CommentObject *comment = [[CommentObject alloc] init];
+    
+    comment.username = @"Ivan Zhang";
+    comment.text = @"Very good service, would recommend";
+    comment.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+    comment.date = [NSDate date];
+    
+    [self.comments addObject:comment];
+    
+    
+    CommentObject *comment2 = [[CommentObject alloc] init];
+    
+    comment2.username = @"Ivan Zhang";
+    comment2.text = @"Very good service, would recommend. ajknsdk ajsndkj anskjd nskjdhfb skjdhfb skjdfb skjhdfb skjhdf nksjdhfbjshdbf kjshbdfk hjsdbf kjhsdfjkhsdfb kjshdbfsjkhdbf jshdnf bskjhdfb sjkhdbf sjkhdbf hjksd";
+    comment2.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+    comment2.date = [NSDate date];
+    
+    [self.comments addObject:comment2];
+    
+    CommentObject *comment3 = [[CommentObject alloc] init];
+    
+    comment3.username = @"Ivan Zhang";
+    comment3.text = @"Very good service, would recommend.a sjkdanskjdn kjasnd aksnd akjsdn akjsdn kanjd askj nakjsd kjasdn kjasnd ";
+    comment3.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+    comment3.date = [NSDate date];
+    
+    [self.comments addObject:comment3];
+    
+    [self.commentsView reloadData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,11 +158,28 @@
         self.user = [[UserObject alloc] init];
     }
     
+    self.lblName.text = self.user.name;
+    self.lblLocation.text = self.user.location;
+//    [self.tvBio setText:self.user.bio];
+    self.ivProfilePic.image = self.user.profilePic;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)segmentChanged:(id)sender {
+    UISegmentedControl *control = (UISegmentedControl *)sender;
+    NSInteger selectedSegment = control.selectedSegmentIndex;
+    
+    if (selectedSegment == 0) {
+        self.commentsView.hidden = YES;
+        self.collectionView.hidden = NO;
+    } else {
+        self.commentsView.hidden = NO;
+        self.collectionView.hidden = YES;
+    }
 }
 
 /*
@@ -138,26 +206,26 @@
 //    return CGSizeMake(self.collectionView.bounds.size.width, 30);
 //}
 
--(CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(self.collectionView.bounds.size.width, 160);
-}
-
--(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-          viewForSupplementaryElementOfKind:(NSString *)kind
-                                atIndexPath:(NSIndexPath *)indexPath
-{
-    UserHeaderReusableView *reView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"collectionHeader" forIndexPath:indexPath];
-    
-    
-    reView.lblName.text = self.user.name;
-    reView.lblLocation.text = self.user.location;
-    reView.tvBio.text = self.user.bio;
-    reView.ivProfilePic.image = self.user.profilePic;
-    
-    [reView.tvBio setFont: [UIFont systemFontOfSize:15]];
-    
-    return reView;
-}
+//-(CGSize) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+//    return CGSizeMake(self.collectionView.bounds.size.width, 160);
+//}
+//
+//-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+//          viewForSupplementaryElementOfKind:(NSString *)kind
+//                                atIndexPath:(NSIndexPath *)indexPath
+//{
+//    UserHeaderReusableView *reView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"collectionHeader" forIndexPath:indexPath];
+//    
+//    
+//    reView.lblName.text = self.user.name;
+//    reView.lblLocation.text = self.user.location;
+//    reView.tvBio.text = self.user.bio;
+//    reView.ivProfilePic.image = self.user.profilePic;
+//    
+//    [reView.tvBio setFont: [UIFont systemFontOfSize:15]];
+//    
+//    return reView;
+//}
 
 -(UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"itemCell" forIndexPath:indexPath];
@@ -180,6 +248,41 @@
     NSLog(@"final size: %@", NSStringFromCGSize(finalSize));
     
     return finalSize;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.comments.count;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewAutomaticDimension;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
+    
+    CommentObject *comment = self.comments[indexPath.row];
+    cell.lblName.text = comment.username;
+    cell.lblDate.text = [comment.date timeAgo];
+    cell.lblComment.text = comment.text;
+    cell.ivProfilePic.image = comment.profilePic;
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

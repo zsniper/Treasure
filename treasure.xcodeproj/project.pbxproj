@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E87E012E1BAE14D200631F71 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E87E012D1BAE14D200631F71 /* CommentTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		E87E01311BAE18FF00631F71 /* CommentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E87E01301BAE18FF00631F71 /* CommentObject.m */; settings = {ASSET_TAGS = (); }; };
 		E8E180C61BAD95930078CC8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E180C51BAD95930078CC8E /* main.m */; };
 		E8E180C91BAD95930078CC8E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E180C81BAD95930078CC8E /* AppDelegate.m */; };
 		E8E180CC1BAD95930078CC8E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E180CB1BAD95930078CC8E /* ViewController.m */; };
@@ -38,6 +40,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E87E012C1BAE14D200631F71 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		E87E012D1BAE14D200631F71 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		E87E012F1BAE18FF00631F71 /* CommentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentObject.h; sourceTree = "<group>"; };
+		E87E01301BAE18FF00631F71 /* CommentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentObject.m; sourceTree = "<group>"; };
 		E8E180C11BAD95930078CC8E /* treasure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = treasure.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E180C51BAD95930078CC8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E8E180C71BAD95930078CC8E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,12 +131,16 @@
 				E8E180D21BAD95930078CC8E /* LaunchScreen.storyboard */,
 				E8E180D51BAD95930078CC8E /* Info.plist */,
 				E8E180C41BAD95930078CC8E /* Supporting Files */,
+				E8E1810E1BADE9720078CC8E /* UserHeaderReusableView.h */,
+				E8E1810F1BADE9720078CC8E /* UserHeaderReusableView.m */,
 				E8E180DB1BAD9EF90078CC8E /* UserTableViewCell.h */,
 				E8E180DC1BAD9EF90078CC8E /* UserTableViewCell.m */,
 				E8E180F31BADB27C0078CC8E /* ItemCollectionViewCell.h */,
 				E8E180F41BADB27C0078CC8E /* ItemCollectionViewCell.m */,
 				E8E180DE1BADA06F0078CC8E /* UserObject.h */,
 				E8E180DF1BADA06F0078CC8E /* UserObject.m */,
+				E87E012F1BAE18FF00631F71 /* CommentObject.h */,
+				E87E01301BAE18FF00631F71 /* CommentObject.m */,
 				E8E180FD1BADB5D00078CC8E /* ItemObject.h */,
 				E8E180FB1BADB5C50078CC8E /* ItemObject.m */,
 				E8E180E11BADA4880078CC8E /* NSDate+TimeAgo.h */,
@@ -147,6 +157,8 @@
 				E8E180E61BADA5E80078CC8E /* Untitled3.png */,
 				E8E180E71BADA5E80078CC8E /* Untitled4.png */,
 				E8E180EC1BADA6EE0078CC8E /* user.jpg */,
+				E87E012C1BAE14D200631F71 /* CommentTableViewCell.h */,
+				E87E012D1BAE14D200631F71 /* CommentTableViewCell.m */,
 			);
 			path = treasure;
 			sourceTree = "<group>";
@@ -155,8 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				E8E180C51BAD95930078CC8E /* main.m */,
-				E8E1810E1BADE9720078CC8E /* UserHeaderReusableView.h */,
-				E8E1810F1BADE9720078CC8E /* UserHeaderReusableView.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -261,8 +271,10 @@
 				E8E180CC1BAD95930078CC8E /* ViewController.m in Sources */,
 				E8E180F91BADB3100078CC8E /* FBLikeLayout.m in Sources */,
 				E8E180C91BAD95930078CC8E /* AppDelegate.m in Sources */,
+				E87E012E1BAE14D200631F71 /* CommentTableViewCell.m in Sources */,
 				E8E180E01BADA06F0078CC8E /* UserObject.m in Sources */,
 				E8E180C61BAD95930078CC8E /* main.m in Sources */,
+				E87E01311BAE18FF00631F71 /* CommentObject.m in Sources */,
 				E8E180E31BADA4A70078CC8E /* NSDate+TimeAgo.m in Sources */,
 				E8E181101BADE9720078CC8E /* UserHeaderReusableView.m in Sources */,
 			);
@@ -415,6 +427,7 @@
 				E8E180DA1BAD95930078CC8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
