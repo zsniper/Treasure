@@ -10,6 +10,7 @@
 
 @implementation UserObject
 
+@synthesize userId;
 @synthesize name;
 @synthesize profilePic;
 @synthesize bio;

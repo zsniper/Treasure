@@ -1,12 +1,13 @@
 //
-//  UserViewController.m
+//  UserEditableViewController.m
 //  treasure
 //
 //  Created by zkmb on 2015-09-19.
 //  Copyright © 2015 Zi Kai Chen. All rights reserved.
 //
 
-#import "UserViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UserEditableViewController.h"
 #import "ItemCollectionViewCell.h"
 #import "ItemObject.h"
 #import "FBLikeLayout.h"
@@ -14,18 +15,16 @@
 #import "CommentTableViewCell.h"
 #import "NSDate+TimeAgo.h"
 #import "CommentObject.h"
-#import "InventoryViewController.h"
-#import "AFNetworking.h"
-#import "AddCommentViewController.h"
 
-@interface UserViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
+@interface UserEditableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UITableView *commentsView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *ivProfilePic;
-@property (weak, nonatomic) IBOutlet UILabel *lblLocation;
-@property (weak, nonatomic) IBOutlet UILabel *lblName;
+@property (weak, nonatomic) IBOutlet UITextField *tfLocation;
+@property (weak, nonatomic) IBOutlet UIButton *btnIntuit;
+
 @property (weak, nonatomic) IBOutlet UITextView *tvBio;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentBar;
 
@@ -35,7 +34,7 @@
 
 @end
 
-@implementation UserViewController
+@implementation UserEditableViewController
 
 
 -(void)viewDidLayoutSubviews{
@@ -113,7 +112,7 @@
     
     NSLog(@"items: %@", self.items);
         
-//    [self.collectionView reloadData];
+    [self.collectionView reloadData];
     
     // TABLE
     
@@ -154,101 +153,31 @@
     
     [self.commentsView reloadData];
     
+    
+    self.tvBio.layer.borderWidth = 0.5f;
+    self.tvBio.layer.borderColor = [[UIColor colorWithWhite:205/255.0f alpha:1.0] CGColor];
+    self.tvBio.layer.masksToBounds = YES;
+    self.tvBio.layer.cornerRadius = 5.0f;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     if (!self.user) {
         self.user = [[UserObject alloc] init];
+        self.user.userId = 1;
+        self.user.name = @"Zi Kai Chen";
+        self.user.location = @"Waterloo";
+        self.user.profilePic = [UIImage imageNamed:@"user.jpg"];
+        self.user.bio = @"Lorem ipsum constadeur amet sit anum.";
     }
     
-    self.lblName.text = self.user.name;
-    self.lblLocation.text = self.user.location;
-//    [self.tvBio setText:self.user.bio];
+    self.title = self.user.name;
+    self.tfLocation.text = self.user.location;
+    [self.tvBio setText:self.user.bio];
     self.ivProfilePic.image = self.user.profilePic;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    // GET USER ITEMS
-    [manager GET:[NSString stringWithFormat:@"%@%d",@"http://ivanzhang.ca/treasure/treasure-endpoints/index.php?cmd=getuseritems&userid=",self.user.userId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        if ([responseObject isKindOfClass:[NSArray class]]) {
-            NSArray *responseArray = responseObject;
-            for (int i = 0; i < responseArray.count; i++) {
-                NSDictionary *responseItem = responseArray[i];
-                
-                if ([responseItem valueForKey:@"name"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"price"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"image"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"created_at"] == (id)[NSNull null] ||
-                    [responseItem[@"image"] length] == 0
-                    ) {
-                    continue;
-                }
-                
-                ItemObject *item = [[ItemObject alloc] init];
-                item.title = responseItem[@"name"];
-                item.price = [responseItem[@"price"] stringValue];
-            
-                NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-                NSLog(@"base64: %@", base64);
-                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
-                UIImage *ret = [UIImage imageWithData:imageData];
-                
-                item.primaryPic = ret;
-                item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-                item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-                item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-                item.datePosted = [NSDate dateWithTimeIntervalSince1970:[responseItem[@"created_at"] intValue]];
-                item.description = responseItem[@"name"];
-                
-                [self.items addObject:item];
-            }
-            [self.collectionView reloadData];
-            /* do something with responseArray */
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
     
-    // GET USER COMMENTS
-    [manager GET:[NSString stringWithFormat:@"%@%d",@"http://ivanzhang.ca/treasure/treasure-endpoints/index.php?cmd=getusercomments&userid=",self.user.userId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        if ([responseObject isKindOfClass:[NSArray class]]) {
-            NSArray *responseArray = responseObject;
-            for (int i = 0; i < responseArray.count; i++) {
-                NSDictionary *responseItem = responseArray[i];
-                
-                if ([responseItem valueForKey:@"commenterid"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"comment"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"fname"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"lname"] == (id)[NSNull null] ||
-                    [responseItem valueForKey:@"created_at"] == (id)[NSNull null] //||
-//                    [responseItem[@"image"] length] == 0
-                    ) {
-                    continue;
-                }
-                
-                CommentObject *comment = [[CommentObject alloc] init];
-                comment.text = responseItem[@"comment"];
-                comment.username = [NSString stringWithFormat:@"%@ %@", responseItem[@"fname"], responseItem[@"lname"]];
-                
-                if ([responseItem valueForKey:@"image"] != (id)[NSNull null]) {
-                    NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
-                    UIImage *ret = [UIImage imageWithData:imageData];
-                    comment.profilePic = ret;
-                }
-                
-                comment.date = [NSDate dateWithTimeIntervalSince1970:[responseItem[@"created_at"] intValue]];
-                
-                [self.comments addObject:comment];
-            }
-            [self.commentsView reloadData];
-            /* do something with responseArray */
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -316,15 +245,11 @@
 
 -(UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"itemCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor blueColor];
     
     ItemObject *item = self.items[indexPath.row];
-    //    if (item.primaryPic) {
-    NSLog(@"item.name: %@", item.title);
     cell.ivItem.image = item.primaryPic;
-//    }
-    cell.lblPrice.text = item.price ? item.price : @"";
-    
+    cell.lblPrice.text = item.price;
     
     return cell;
 }
@@ -340,29 +265,6 @@
     
     return finalSize;
 }
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"inventoryDetails" sender:self.items[indexPath.row]];
-    
-    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"inventoryDetails"]) {
-        InventoryViewController *vc = (InventoryViewController *)[segue destinationViewController];
-        
-        ItemObject *item = (ItemObject *)sender;
-        
-        vc.item = item;
-        vc.seller = self.user;
-    } else if ([[segue identifier] isEqualToString:@"addFeedback"]) {
-        
-        AddCommentViewController *vc = (AddCommentViewController *)[[segue destinationViewController] topViewController];
-        
-        vc.user = self.user;
-    }
-}
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.comments.count;
@@ -383,7 +285,7 @@
     cell.lblName.text = comment.username;
     cell.lblDate.text = [comment.date timeAgo];
     cell.lblComment.text = comment.text;
-    cell.ivProfilePic.image = comment.profilePic ? comment.profilePic : [UIImage imageNamed:@"user.jpg"];
+    cell.ivProfilePic.image = comment.profilePic;
     
     return cell;
 }

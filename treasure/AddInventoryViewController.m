@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *tfPrice;
 @property (weak, nonatomic) IBOutlet UITextField *tfTags;
 @property (weak, nonatomic) IBOutlet UITextView *tvDescription;
+@property (weak, nonatomic) IBOutlet UIButton *btnInventory;
+@property (weak, nonatomic) IBOutlet UIButton *btnIntuit;
 
 @end
 
@@ -35,12 +37,27 @@
     self.tvDescription.layer.masksToBounds = YES;
     self.tvDescription.layer.cornerRadius = 5.0f;
     
+    
+    self.btnInventory.layer.borderWidth = 1.0f;
+    self.btnInventory.layer.borderColor = [[UIColor colorWithWhite:205/255.0f alpha:1.0] CGColor];
+    self.btnInventory.layer.masksToBounds = YES;
+    self.btnInventory.layer.cornerRadius = 5.0f;
+    
+    self.btnIntuit.layer.borderWidth = 1.0f;
+    self.btnIntuit.layer.borderColor = [[UIColor colorWithWhite:205/255.0f alpha:1.0] CGColor];
+    self.btnIntuit.layer.masksToBounds = YES;
+    self.btnIntuit.layer.cornerRadius = 5.0f;
+    
     self.btnPrimaryPic.titleLabel.numberOfLines = 2;
     self.btnPrimaryPic.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.btnPicture2.titleLabel.numberOfLines = 2;
     self.btnPicture2.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.btnPicture3.titleLabel.numberOfLines = 3;
     self.btnPicture3.titleLabel.textAlignment = NSTextAlignmentCenter;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,8 +79,10 @@
     
     NSDictionary *parameters = @{@"cmd":@"newitem",
                                  @"name": self.tfTitle.text,
-                                 @"price": @1.00,
+                                 @"price": self.tfPrice.text,
                                  @"userid": @1,
+                                 @"tags": self.tfTags.text,
+                                 @"desc": self.tvDescription.text,
                                  @"image":encodedString};
 
 

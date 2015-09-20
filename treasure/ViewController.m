@@ -11,6 +11,7 @@
 #import "UserObject.h"
 #import "NSDate+TimeAgo.h"
 #import "UserViewController.h"
+#import "AFNetworking.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -50,6 +51,70 @@
     [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    // GET USER ITEMS
+    [manager GET:@"http://ivanzhang.ca/treasure/treasure-endpoints/index.php?cmd=getusers" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSArray *responseArray = responseObject;
+            for (int i = 0; i < responseArray.count; i++) {
+                NSDictionary *responseItem = responseArray[i];
+                
+                if ([responseItem valueForKey:@"fname"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"lname"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"userid"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"items"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"image"] == (id)[NSNull null]
+                    ) {
+                    continue;
+                }
+                
+                UserObject *user = [[UserObject alloc] init];
+                user.name = [NSString stringWithFormat:@"%@ %@", responseItem[@"fname"], responseItem[@"lname"]];
+                user.userId = [responseItem[@"userid"] intValue];
+                user.location = @"Waterloo";
+                user.lastPosted = [NSDate date];
+//                user.bio = responseItem[@"bio"];
+                user.bio = @"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ";
+                
+                if ([responseItem valueForKey:@"image"] != (id)[NSNull null]) {
+                    NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+                    NSLog(@"base64: %@", base64);
+                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
+                    UIImage *ret = [UIImage imageWithData:imageData];
+                    
+                    user.profilePic = ret;
+                }
+                
+                NSArray *itemsArray = responseItem[@"items"];
+                
+                for (int j = 0; j < itemsArray.count; j++) {
+                    NSDictionary *userItemResponse = itemsArray[j];
+                    if ([responseItem valueForKey:@"image"] == (id)[NSNull null]) {
+                        continue;
+                    }
+                    
+                    NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+                    NSLog(@"base64: %@", base64);
+                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
+                    UIImage *ret = [UIImage imageWithData:imageData];
+                    
+                    [user.inventory addObject:ret];
+                }
+                
+                [self.users addObject:user];
+            }
+            [self.tableView reloadData];
+            /* do something with responseArray */
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -67,6 +132,22 @@
     cell.lblSubtitle.text = user.location;
     cell.lblTime.text = [user.lastPosted timeAgo];
     cell.ivProfile.image = user.profilePic;
+    
+    if (user.inventory.count >= 4) {
+        cell.item4.image = user.inventory[3];
+    }
+    
+    if (user.inventory.count >= 3) {
+        cell.item3.image = user.inventory[2];
+    }
+    
+    if (user.inventory.count >= 2) {
+        cell.item2.image = user.inventory[1];
+    }
+    
+    if (user.inventory.count >= 1) {
+        cell.item1.image = user.inventory[0];
+    }
     
     return cell;
 }

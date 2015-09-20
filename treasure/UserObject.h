@@ -11,6 +11,7 @@
 
 @interface UserObject : NSObject
 
+@property (nonatomic, assign) int userId;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UIImage *profilePic;
 @property (nonatomic, strong) NSString *bio;
