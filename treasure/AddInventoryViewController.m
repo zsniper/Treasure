@@ -82,7 +82,7 @@
                                  @"price": self.tfPrice.text,
                                  @"userid": @1,
                                  @"tags": self.tfTags.text,
-                                 @"desc": self.tvDescription.text,
+                                 @"description": self.tvDescription.text,
                                  @"image":encodedString};
 
 

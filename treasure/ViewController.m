@@ -28,25 +28,29 @@
         self.users = [NSMutableArray array];
     }
     
-    UserObject *user = [[UserObject alloc] init];
-    user.name = @"Zi Kai Chen";
-    user.bio = @"Selling all my junk";
-    user.location = @"Waterloo";
-    user.lastPosted = [NSDate dateWithTimeIntervalSinceNow:-12310];
-    user.profilePic = [UIImage imageNamed:@"user.jpg"];
-    
-    [self.users addObject:user];
-    
-    
-    
-    UserObject *user2 = [[UserObject alloc] init];
-    user2.name = @"Justin Ng";
-    user2.bio = @"Selling all my junk too";
-    user2.location = @"Waterloo";
-    user2.lastPosted = [NSDate dateWithTimeIntervalSinceNow:-891232];
-    user2.profilePic = [UIImage imageNamed:@"user.jpg"];
-    
-    [self.users addObject:user2];
+//    UserObject *user = [[UserObject alloc] init];
+//    user.name = @"Zi Kai Chen";
+//    user.bio = @"Selling all my junk";
+//    user.location = @"Waterloo";
+//    user.lastPosted = [NSDate dateWithTimeIntervalSinceNow:-12310];
+//    user.profilePic = [UIImage imageNamed:@"user.jpg"];
+//    user.userId = 1;
+//    user.inventory = [NSMutableArray array];
+//    
+//    [self.users addObject:user];
+//    
+//    
+//    
+//    UserObject *user2 = [[UserObject alloc] init];
+//    user2.name = @"Justin Ng";
+//    user2.bio = @"Selling all my junk too";
+//    user2.location = @"Waterloo";
+//    user2.lastPosted = [NSDate dateWithTimeIntervalSinceNow:-891232];
+//    user2.profilePic = [UIImage imageNamed:@"user.jpg"];
+//    user2.userId = 1;
+//    user2.inventory = [NSMutableArray array];
+//    
+//    [self.users addObject:user2];
     
     [self.tableView reloadData];
 }
@@ -76,12 +80,13 @@
                 user.userId = [responseItem[@"userid"] intValue];
                 user.location = @"Waterloo";
                 user.lastPosted = [NSDate date];
+                user.inventory = [NSMutableArray array];
 //                user.bio = responseItem[@"bio"];
                 user.bio = @"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ";
                 
                 if ([responseItem valueForKey:@"image"] != (id)[NSNull null]) {
                     NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-                    NSLog(@"base64: %@", base64);
+//                    NSLog(@"base64: %@", base64);
                     NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
                     UIImage *ret = [UIImage imageWithData:imageData];
                     
@@ -96,12 +101,13 @@
                         continue;
                     }
                     
-                    NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
-                    NSLog(@"base64: %@", base64);
+                    NSString *base64 = [[userItemResponse[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+//                    NSLog(@"base64: %@", base64);
                     NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
                     UIImage *ret = [UIImage imageWithData:imageData];
-                    
-                    [user.inventory addObject:ret];
+                    if (ret) {
+                        [user.inventory addObject:ret];
+                    }
                 }
                 
                 [self.users addObject:user];

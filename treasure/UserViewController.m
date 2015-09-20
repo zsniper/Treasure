@@ -67,49 +67,49 @@
         self.items = [NSMutableArray array];
     }
     
-    ItemObject *item = [[ItemObject alloc] init];
-    
-    item.title = @"Potato Chip";
-    item.price = @"$5.00";
-    item.primaryPic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
-//    item.primaryPic = [UIImage imageNamed:@"Untitled1.png"];
-    item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item.datePosted = [NSDate date];
-    item.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item];
-    
-    
-    ItemObject *item2 = [[ItemObject alloc] init];
-    
-    item2.title = @"Potato Chip";
-    item2.price = @"$5.00";
-    item2.primaryPic = [UIImage imageNamed:@"A-tiger-up-close-010.jpg"];
-//    item2.primaryPic = [UIImage imageNamed:@"Untitled2.png"];
-    item2.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item2.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item2.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item2.datePosted = [NSDate date];
-    item2.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item2];
-    
-    
-    ItemObject *item3 = [[ItemObject alloc] init];
-    
-    item3.title = @"Potato Chip";
-    item3.price = @"$5.00";
-    item3.primaryPic = [UIImage imageNamed:@"arrow-poster.jpg"];
-//    item3.primaryPic = [UIImage imageNamed:@"Untitled3.png"];
-    item3.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item3.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item3.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item3.datePosted = [NSDate date];
-    item3.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item3];
+//    ItemObject *item = [[ItemObject alloc] init];
+//    
+//    item.title = @"Potato Chip";
+//    item.price = @"$5.00";
+//    item.primaryPic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+////    item.primaryPic = [UIImage imageNamed:@"Untitled1.png"];
+//    item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item.datePosted = [NSDate date];
+//    item.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item];
+//    
+//    
+//    ItemObject *item2 = [[ItemObject alloc] init];
+//    
+//    item2.title = @"Potato Chip";
+//    item2.price = @"$5.00";
+//    item2.primaryPic = [UIImage imageNamed:@"A-tiger-up-close-010.jpg"];
+////    item2.primaryPic = [UIImage imageNamed:@"Untitled2.png"];
+//    item2.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item2.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item2.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item2.datePosted = [NSDate date];
+//    item2.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item2];
+//    
+//    
+//    ItemObject *item3 = [[ItemObject alloc] init];
+//    
+//    item3.title = @"Potato Chip";
+//    item3.price = @"$5.00";
+//    item3.primaryPic = [UIImage imageNamed:@"arrow-poster.jpg"];
+////    item3.primaryPic = [UIImage imageNamed:@"Untitled3.png"];
+//    item3.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item3.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item3.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item3.datePosted = [NSDate date];
+//    item3.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item3];
     
     NSLog(@"items: %@", self.items);
         
@@ -323,7 +323,7 @@
     NSLog(@"item.name: %@", item.title);
     cell.ivItem.image = item.primaryPic;
 //    }
-    cell.lblPrice.text = item.price ? item.price : @"";
+    cell.lblPrice.text = item.price ? [NSString stringWithFormat:@"$%@",item.price] : @"";
     
     
     return cell;

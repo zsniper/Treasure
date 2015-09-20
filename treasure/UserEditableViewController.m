@@ -15,6 +15,7 @@
 #import "CommentTableViewCell.h"
 #import "NSDate+TimeAgo.h"
 #import "CommentObject.h"
+#import "AFNetworking.h"
 
 @interface UserEditableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 
@@ -66,49 +67,49 @@
         self.items = [NSMutableArray array];
     }
     
-    ItemObject *item = [[ItemObject alloc] init];
-    
-    item.title = @"Potato Chip";
-    item.price = @"$5.00";
-    item.primaryPic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
-//    item.primaryPic = [UIImage imageNamed:@"Untitled1.png"];
-    item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item.datePosted = [NSDate date];
-    item.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item];
-    
-    
-    ItemObject *item2 = [[ItemObject alloc] init];
-    
-    item2.title = @"Potato Chip";
-    item2.price = @"$5.00";
-    item2.primaryPic = [UIImage imageNamed:@"A-tiger-up-close-010.jpg"];
-//    item2.primaryPic = [UIImage imageNamed:@"Untitled2.png"];
-    item2.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item2.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item2.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item2.datePosted = [NSDate date];
-    item2.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item2];
-    
-    
-    ItemObject *item3 = [[ItemObject alloc] init];
-    
-    item3.title = @"Potato Chip";
-    item3.price = @"$5.00";
-    item3.primaryPic = [UIImage imageNamed:@"arrow-poster.jpg"];
-//    item3.primaryPic = [UIImage imageNamed:@"Untitled3.png"];
-    item3.picture1 = [UIImage imageNamed:@"Untitled2.png"];
-    item3.picture2 = [UIImage imageNamed:@"Untitled3.png"];
-    item3.picture3 = [UIImage imageNamed:@"Untitled4.png"];
-    item3.datePosted = [NSDate date];
-    item3.description = @"These are yummy potato jobs";
-    
-    [self.items addObject:item3];
+//    ItemObject *item = [[ItemObject alloc] init];
+//    
+//    item.title = @"Potato Chip";
+//    item.price = @"$5.00";
+//    item.primaryPic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+////    item.primaryPic = [UIImage imageNamed:@"Untitled1.png"];
+//    item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item.datePosted = [NSDate date];
+//    item.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item];
+//    
+//    
+//    ItemObject *item2 = [[ItemObject alloc] init];
+//    
+//    item2.title = @"Potato Chip";
+//    item2.price = @"$5.00";
+//    item2.primaryPic = [UIImage imageNamed:@"A-tiger-up-close-010.jpg"];
+////    item2.primaryPic = [UIImage imageNamed:@"Untitled2.png"];
+//    item2.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item2.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item2.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item2.datePosted = [NSDate date];
+//    item2.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item2];
+//    
+//    
+//    ItemObject *item3 = [[ItemObject alloc] init];
+//    
+//    item3.title = @"Potato Chip";
+//    item3.price = @"$5.00";
+//    item3.primaryPic = [UIImage imageNamed:@"arrow-poster.jpg"];
+////    item3.primaryPic = [UIImage imageNamed:@"Untitled3.png"];
+//    item3.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+//    item3.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+//    item3.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+//    item3.datePosted = [NSDate date];
+//    item3.description = @"These are yummy potato jobs";
+//    
+//    [self.items addObject:item3];
     
     NSLog(@"items: %@", self.items);
         
@@ -123,35 +124,35 @@
         self.comments = [NSMutableArray array];
     }
     
-    CommentObject *comment = [[CommentObject alloc] init];
-    
-    comment.username = @"Ivan Zhang";
-    comment.text = @"Very good service, would recommend";
-    comment.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
-    comment.date = [NSDate date];
-    
-    [self.comments addObject:comment];
-    
-    
-    CommentObject *comment2 = [[CommentObject alloc] init];
-    
-    comment2.username = @"Ivan Zhang";
-    comment2.text = @"Very good service, would recommend. ajknsdk ajsndkj anskjd nskjdhfb skjdhfb skjdfb skjhdfb skjhdf nksjdhfbjshdbf kjshbdfk hjsdbf kjhsdfjkhsdfb kjshdbfsjkhdbf jshdnf bskjhdfb sjkhdbf sjkhdbf hjksd";
-    comment2.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
-    comment2.date = [NSDate date];
-    
-    [self.comments addObject:comment2];
-    
-    CommentObject *comment3 = [[CommentObject alloc] init];
-    
-    comment3.username = @"Ivan Zhang";
-    comment3.text = @"Very good service, would recommend.a sjkdanskjdn kjasnd aksnd akjsdn akjsdn kanjd askj nakjsd kjasdn kjasnd ";
-    comment3.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
-    comment3.date = [NSDate date];
-    
-    [self.comments addObject:comment3];
-    
-    [self.commentsView reloadData];
+//    CommentObject *comment = [[CommentObject alloc] init];
+//    
+//    comment.username = @"Ivan Zhang";
+//    comment.text = @"Very good service, would recommend";
+//    comment.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+//    comment.date = [NSDate date];
+//    
+//    [self.comments addObject:comment];
+//    
+//    
+//    CommentObject *comment2 = [[CommentObject alloc] init];
+//    
+//    comment2.username = @"Ivan Zhang";
+//    comment2.text = @"Very good service, would recommend. ajknsdk ajsndkj anskjd nskjdhfb skjdhfb skjdfb skjhdfb skjhdf nksjdhfbjshdbf kjshbdfk hjsdbf kjhsdfjkhsdfb kjshdbfsjkhdbf jshdnf bskjhdfb sjkhdbf sjkhdbf hjksd";
+//    comment2.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+//    comment2.date = [NSDate date];
+//    
+//    [self.comments addObject:comment2];
+//    
+//    CommentObject *comment3 = [[CommentObject alloc] init];
+//    
+//    comment3.username = @"Ivan Zhang";
+//    comment3.text = @"Very good service, would recommend.a sjkdanskjdn kjasnd aksnd akjsdn akjsdn kanjd askj nakjsd kjasdn kjasnd ";
+//    comment3.profilePic = [UIImage imageNamed:@"286812__angry-tiger_p.jpg"];
+//    comment3.date = [NSDate date];
+//    
+//    [self.comments addObject:comment3];
+//    
+//    [self.commentsView reloadData];
     
     
     self.tvBio.layer.borderWidth = 0.5f;
@@ -176,7 +177,89 @@
     [self.tvBio setText:self.user.bio];
     self.ivProfilePic.image = self.user.profilePic;
     
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+    // GET USER ITEMS
+    [manager GET:[NSString stringWithFormat:@"%@%d",@"http://ivanzhang.ca/treasure/treasure-endpoints/index.php?cmd=getuseritems&userid=",self.user.userId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSArray *responseArray = responseObject;
+            for (int i = 0; i < responseArray.count; i++) {
+                NSDictionary *responseItem = responseArray[i];
+                
+                if ([responseItem valueForKey:@"name"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"price"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"image"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"created_at"] == (id)[NSNull null] ||
+                    [responseItem[@"image"] length] == 0
+                    ) {
+                    continue;
+                }
+                
+                ItemObject *item = [[ItemObject alloc] init];
+                item.title = responseItem[@"name"];
+                item.price = [responseItem[@"price"] stringValue];
+                
+                NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+                NSLog(@"base64: %@", base64);
+                NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
+                UIImage *ret = [UIImage imageWithData:imageData];
+                
+                item.primaryPic = ret;
+                item.picture1 = [UIImage imageNamed:@"Untitled2.png"];
+                item.picture2 = [UIImage imageNamed:@"Untitled3.png"];
+                item.picture3 = [UIImage imageNamed:@"Untitled4.png"];
+                item.datePosted = [NSDate dateWithTimeIntervalSince1970:[responseItem[@"created_at"] intValue]];
+                item.description = responseItem[@"name"];
+                
+                [self.items addObject:item];
+            }
+            [self.collectionView reloadData];
+            /* do something with responseArray */
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    // GET USER COMMENTS
+    [manager GET:[NSString stringWithFormat:@"%@%d",@"http://ivanzhang.ca/treasure/treasure-endpoints/index.php?cmd=getusercomments&userid=",self.user.userId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSArray *responseArray = responseObject;
+            for (int i = 0; i < responseArray.count; i++) {
+                NSDictionary *responseItem = responseArray[i];
+                
+                if ([responseItem valueForKey:@"commenterid"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"comment"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"fname"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"lname"] == (id)[NSNull null] ||
+                    [responseItem valueForKey:@"created_at"] == (id)[NSNull null] //||
+                    //                    [responseItem[@"image"] length] == 0
+                    ) {
+                    continue;
+                }
+                
+                CommentObject *comment = [[CommentObject alloc] init];
+                comment.text = responseItem[@"comment"];
+                comment.username = [NSString stringWithFormat:@"%@ %@", responseItem[@"fname"], responseItem[@"lname"]];
+                
+                if ([responseItem valueForKey:@"image"] != (id)[NSNull null]) {
+                    NSString *base64 = [[responseItem[@"image"] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
+                    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
+                    UIImage *ret = [UIImage imageWithData:imageData];
+                    comment.profilePic = ret;
+                }
+                
+                comment.date = [NSDate dateWithTimeIntervalSince1970:[responseItem[@"created_at"] intValue]];
+                
+                [self.comments addObject:comment];
+            }
+            [self.commentsView reloadData];
+            /* do something with responseArray */
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
     
 }
 
